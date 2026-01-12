@@ -6,8 +6,9 @@
 // import Combine from "./combine-output/Combine"
 // import Settings from "./checbox/Settings"
 // import AddItem from "./add/AddItem"
-import Highlight from "./highlight/Highlight"
+// import Highlight from "./highlight/Highlight"
+import Filter from "./filter/Filter"
 
 export default function App() {
-  return <Highlight />
+  return <Filter />
 }
