@@ -7,8 +7,9 @@
 // import Settings from "./checbox/Settings"
 // import AddItem from "./add/AddItem"
 // import Highlight from "./highlight/Highlight"
-import Filter from "./filter/Filter"
+// import Filter from "./filter/Filter"
+import Undo from "./undo/Undo"
 
 export default function App() {
-  return <Filter />
+  return <Undo />
 }
