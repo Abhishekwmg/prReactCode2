@@ -4,9 +4,10 @@
 // import CharCount from "./char-count/CharCount"
 // import Form from "./form/Form"
 // import Combine from "./combine-output/Combine"
-import Settings from "./checbox/Settings"
-import AddItem from "./add/AddItem"
+// import Settings from "./checbox/Settings"
+// import AddItem from "./add/AddItem"
+import Highlight from "./highlight/Highlight"
 
 export default function App() {
-  return <AddItem />
+  return <Highlight />
 }
