@@ -5,7 +5,8 @@
 // import Form from "./form/Form"
 // import Combine from "./combine-output/Combine"
 import Settings from "./checbox/Settings"
+import AddItem from "./add/AddItem"
 
 export default function App() {
-  return <Settings />
+  return <AddItem />
 }
