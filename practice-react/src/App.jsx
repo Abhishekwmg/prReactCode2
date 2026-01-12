@@ -3,8 +3,9 @@
 // import ShowHide from "./show-hide/ShowHide"
 // import CharCount from "./char-count/CharCount"
 // import Form from "./form/Form"
-import Combine from "./combine-output/Combine"
+// import Combine from "./combine-output/Combine"
+import Settings from "./checbox/Settings"
 
 export default function App() {
-  return <Combine />
+  return <Settings />
 }
