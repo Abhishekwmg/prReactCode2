@@ -2,8 +2,9 @@
 // import Toggle from "./toggle-btn/Toggle"
 // import ShowHide from "./show-hide/ShowHide"
 // import CharCount from "./char-count/CharCount"
-import Form from "./form/Form"
+// import Form from "./form/Form"
+import Combine from "./combine-output/Combine"
 
 export default function App() {
-  return <Form />
+  return <Combine />
 }
