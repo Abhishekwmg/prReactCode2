@@ -8,8 +8,9 @@
 // import AddItem from "./add/AddItem"
 // import Highlight from "./highlight/Highlight"
 // import Filter from "./filter/Filter"
-import Undo from "./undo/Undo"
+// import Undo from "./undo/Undo"
+import Tabs from "./tabs/Tabs"
 
 export default function App() {
-  return <Undo />
+  return <Tabs />
 }
