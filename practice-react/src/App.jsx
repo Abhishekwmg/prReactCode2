@@ -9,8 +9,9 @@
 // import Highlight from "./highlight/Highlight"
 // import Filter from "./filter/Filter"
 // import Undo from "./undo/Undo"
-import Tabs from "./tabs/Tabs"
+// import Tabs from "./tabs/Tabs"
+import MultiForm from "./multi-step-form/MultiForm"
 
 export default function App() {
-  return <Tabs />
+  return <MultiForm />
 }
