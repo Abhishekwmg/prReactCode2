@@ -3,7 +3,15 @@ import { formData } from "../multi-step-form/form-data";
 
 export default function MultiForm() {
     const [step, setStep] = useState(0);
-    const [input, setInput] = useState("");
+    const [formValue, setFormValue] = useState({});
+
+    function handleFormValue(e) {
+        const { name, value, type, checked } = e.target;
+        setFormValue(prevFormValue => ({
+            ...prevFormValue,
+            [name]: type === "checkbox" ? checked : value
+        }))
+    }
 
     const formDataLength = formData.length - 1;
 
@@ -35,7 +43,7 @@ export default function MultiForm() {
                                 <select>
                                     {d.options.map((option) => {
                                         return (
-                                            <option key={option.label} value={option.value}>
+                                            <option name={option.name} key={option.label} value={option.name} checked={!!formValue[option.name]} onChange={handleFormValue}>
                                                 {option.label}
                                             </option>
                                         );
@@ -45,8 +53,8 @@ export default function MultiForm() {
                                 <label>
                                     {d.label}
                                     <input
-                                        value={input}
-                                        onChange={e => setInput(e.target.value)}
+                                        value={formValue[d.name] || ""}
+                                        onChange={handleFormValue}
                                         name={d.name}
                                         type={d.type}
                                         placeholder={d.placeholder}

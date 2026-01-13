@@ -72,9 +72,9 @@ export const formData = [
                 label: "Preferred Theme",
                 type: "select",
                 options: [
-                    { label: "Light", value: "light" },
-                    { label: "Dark", value: "dark" },
-                    { label: "System Default", value: "system" },
+                    { name: "light", label: "Light", value: "light" },
+                    { name: "dark", label: "Dark", value: "dark" },
+                    { name: "system", label: "System Default", value: "system" },
                 ],
                 required: true,
             },
