@@ -3,9 +3,12 @@ import { useState } from "react"
 export default function Todo() {
 
     const [data, setData] = useState(todoData);
+    const [task, setTask] = useState("");
 
     return <>
         <h1>Todo App</h1>
+        <input type="text" value={task} onChange={e => setTask(e.target.value)} />
+        <button>Add</button>
     </>
 }
 
