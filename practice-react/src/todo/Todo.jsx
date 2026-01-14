@@ -8,7 +8,21 @@ export default function Todo() {
     return <>
         <h1>Todo App</h1>
         <input type="text" value={task} onChange={e => setTask(e.target.value)} />
-        <button>Add</button>
+        <button type="button" onClick={handleAddTask}>Add</button>
+
+        {/* Rendering pre-todo-list */}
+        <ol>
+            {
+                data.map((d) => {
+                    return <>
+                        <li key={d.id}>{d.text}</li>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </>
+                })
+            }
+        </ol>
+
     </>
 }
 
