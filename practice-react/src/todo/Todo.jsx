@@ -6,10 +6,18 @@ export default function Todo() {
     const [task, setTask] = useState("");
     const [isEdit, setIsEdit] = useState(null);
     const [saveTask, setSaveTask] = useState("");
+    const [isChecked, setIsChecked] = useState(false);
 
     function handleEditTask(d) {
         setIsEdit(d.id);
         setSaveTask(d.text)
+    }
+
+    function handleSaveTask(d) {
+        setData(data.map(da => {
+            return da.id === d.id ? { ...d, text: d.text } : d
+        }))
+        setIsEdit(null);
     }
 
 
@@ -25,7 +33,8 @@ export default function Todo() {
                     return <li key={d.id}>
                         {
                             isEdit === d.id ? <><input value={saveTask} onChange={e => setSaveTask(e.target.value)} type="text" />
-                                <button>Save</button></> : <>
+                                <button onClick={() => handleSaveTask(d)}>Save</button></> : <>
+                                <input type="checkbox" />
                                 <p>{d.text}</p>
                                 <button onClick={() => handleEditTask(d)}>Edit</button></>
                         }
