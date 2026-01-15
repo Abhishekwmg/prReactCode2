@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TodoReducer from "./TodoReducer";
 
 export default function Todo() {
     const [todoData, setTodoData] = useState(preTodoData);
@@ -54,6 +55,7 @@ export default function Todo() {
 
     return (
         <>
+            <TodoReducer />
             <h1>Todo List (Strict)</h1>
             {!isEdit && (
                 <>
