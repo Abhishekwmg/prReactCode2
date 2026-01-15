@@ -20,6 +20,14 @@ export default function Todo() {
         setIsEdit(null);
     }
 
+    function handleCheckBox() {
+        setIsChecked(prevChecked => !prevChecked);
+    }
+
+    function handleDeleteTask(id) {
+        setData(data.filter(da => da.id !== id))
+    }
+
 
     return <>
         <h1>Todo App</h1>
@@ -34,11 +42,11 @@ export default function Todo() {
                         {
                             isEdit === d.id ? <><input value={saveTask} onChange={e => setSaveTask(e.target.value)} type="text" />
                                 <button onClick={() => handleSaveTask(d)}>Save</button></> : <>
-                                <input type="checkbox" />
+                                <input type="checkbox" value={isChecked} onChange={handleCheckBox} />
                                 <p>{d.text}</p>
                                 <button onClick={() => handleEditTask(d)}>Edit</button></>
                         }
-                        <button>Delete</button>
+                        <button onClick={() => handleDeleteTask(d.id)}>Delete</button>
                     </li>
 
                 })
