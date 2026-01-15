@@ -5,7 +5,7 @@ export default function Todo() {
     const [addTask, setAddTask] = useState("");
     const [isEdit, setIsEdit] = useState(null);
     const [saveTask, setSaveTask] = useState("");
-    const [isChecked, setIsChecked] = useState(false);
+    const [filter, setFilter] = useState("all");
 
     function handleAddTask() {
         if (!addTask) return;
@@ -34,17 +34,25 @@ export default function Todo() {
         setIsEdit(null);
     }
 
-    function handleIsChecked(checked, id) {
-        setTodoData(prevData => {
-            prevData.map(data => {
-                return data.id === id ? { ...data, done: checked } : data
-            })
-        })
+    function handleIsChecked(id, checked) {
+
+
+        setTodoData((prevData) => {
+            return prevData.map((data) => {
+                return data.id === id ? { ...data, done: checked } : data;
+            });
+        });
     }
 
     function handleDeleteTask(id) {
         setTodoData(todoData.filter((d) => d.id != id));
     }
+
+    const filterTodoData = todoData.filter(data => {
+        if (filter === "active") return !data.done
+        if (filter === "done") return data.done
+        return data;
+    })
 
     return (
         <>
@@ -58,16 +66,16 @@ export default function Todo() {
                         placeholder="Add items to list"
                     />
                     <button onClick={handleAddTask}>Add</button>
-                    <select name="" id="">
-                        <option value="filter">All</option>
-                        <option value="filter">Active</option>
-                        <option value="filter">Done</option>
+                    <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+                        <option value="all">All</option>
+                        <option value="active">Active</option>
+                        <option value="done">Done</option>
                     </select>
                 </>
             )}
 
             <ol>
-                {todoData.map((todo) => {
+                {filterTodoData.map((todo) => {
                     return (
                         <li
                             style={{
@@ -91,13 +99,15 @@ export default function Todo() {
                                     <input
                                         type="checkbox"
                                         checked={todo.done}
-                                        onChange={() => handleIsChecked(todo.id)}
+                                        onChange={(e) => handleIsChecked(todo.id, e.target.checked)}
                                     />
-                                    <p>{todo.text}</p>
-                                    <button onClick={(e) => handleEditTask(todo.id, e.target.checked)}>Edit</button>
+                                    {
+                                        todo.done ? <p style={{ color: "green" }}><s>{todo.text}</s></p> : <p style={{ color: "yellow" }}>{todo.text}</p>
+                                    }
+                                    <button onClick={() => handleEditTask(todo)}>Edit</button>
                                 </>
                             )}
-                            <button onClick={() => handleDeleteTask(todo.id)}>Delete</button>
+                            <button onClick={() => handleDeleteTask(todo.id)} style={{ color: "#000000", background: "#ff0000" }}>Delete</button>
                         </li>
                     );
                 })}
