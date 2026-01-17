@@ -5,8 +5,6 @@ export default function Heading({ children }) {
 
     const level = useContext(LevelContext);
 
-    console.log(level, "Printing Level from Context");
-
     switch (level) {
         case 1:
             return <h1>{children}</h1>;
