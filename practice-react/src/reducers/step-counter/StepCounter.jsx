@@ -1,36 +1,33 @@
-import { useState, useReducer } from "react";
-import { ACTIONS } from "./action.js";
-import { stepReducer } from "./stepReducer.js";
-
+import { useReducer } from "react"
+import { ACTIONS } from './action'
+import { stepReducer } from "./stepReducer";
 
 export default function StepCounter() {
-    const [step, dispatch] = useReducer(stepReducer, 0)
-    // const [step, setStep] = useState(0);
-    const [count, setCount] = useState(step);
 
-    return (
-        <>
-            <h1>Step Counter</h1>
-            <button onClick={() => dispatch({ type: ACTIONS.INCREMENT })}>
-                +
-            </button>
-            <p aria-live="polite">{count}</p>
-            <button
-                disabled={count === 0}
-                onClick={() => dispatch({ type: ACTIONS.DECREMENT })}
-            >
-                -
-            </button>
-            <button onClick={() => dispatch({ type: ACTIONS.STEP })}>
-                Step {step}
-            </button>
-            <button
-                onClick={() => {
-                    dispatch({ type: ACTIONS.RESET })
-                }}
-            >
-                Reset
-            </button>
-        </>
-    );
+    const initialState = {
+        count: 0,
+        step: 2
+    }
+
+    const [{ count, step }, dispatch] = useReducer(stepReducer, initialState)
+
+    function handleIncrement() {
+        dispatch({ type: ACTIONS.INCREMENT })
+    }
+
+    function handleDecrement() {
+        dispatch({ type: ACTIONS.DECREMENT })
+    }
+
+    function handleStep() {
+        dispatch({ type: ACTIONS.STEP })
+    }
+
+    return <>
+        <h3>Step Counter</h3>
+        <button onClick={handleIncrement}>+</button>
+        <p>{count}</p>
+        <button onClick={handleDecrement}>-</button>
+        <button onClick={handleStep}>Step: {step}</button>
+    </>
 }

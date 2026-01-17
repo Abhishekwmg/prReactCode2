@@ -14,8 +14,10 @@
 // import Todo from "./todo/Todo"
 // import Todo from "./todo-reducer/Todo"
 // import Counter from "./reducers/counter-reducer/Counter"
-import StepCounter from "./reducers/step-counter/StepCounter"
+// import StepCounter from "./reducers/step-counter/StepCounter"
+// import ShoppingCart from "./reducers/shopping-cart/ShoppingCart"
+import MainContext from "./context/MainContext"
 
 export default function App() {
-  return <StepCounter />
+  return <MainContext />
 }
