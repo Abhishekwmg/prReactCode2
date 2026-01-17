@@ -1,72 +1,78 @@
-import { useState } from "react";
-import TodoReducer from "./TodoReducer";
+import { useReducer, useState } from "react";
+import { todoReducer } from "./TodoReducer";
+import { preTodoData } from "./todo-data";
 
 export default function Todo() {
-    const [todoData, setTodoData] = useState(preTodoData);
+    const [todos, dispatch] = useReducer(todoReducer, preTodoData);
+
     const [addTask, setAddTask] = useState("");
-    const [isEdit, setIsEdit] = useState(null);
-    const [saveTask, setSaveTask] = useState("");
+    const [editId, setEditId] = useState(null);
+    const [draftText, setDraftText] = useState("");
     const [filter, setFilter] = useState("all");
 
     function handleAddTask() {
-        if (!addTask) return;
-        setTodoData((prevData) => [
-            ...prevData,
-            {
-                id: Date.now(),
-                text: addTask,
-                done: false,
-            },
-        ]);
+        if (!addTask.trim()) return;
+
+        dispatch({
+            type: "todo/added",
+            id: Date.now(),
+            text: addTask,
+        });
+
         setAddTask("");
     }
 
-    function handleEditTask(todo) {
-        setIsEdit(todo.id);
-        setSaveTask(todo.text);
+    function handleEdit(todo) {
+        setEditId(todo.id);
+        setDraftText(todo.text);
     }
 
-    function handleSaveTask(todo) {
-        setTodoData((prevData) =>
-            prevData.map((data) => {
-                return data.id === todo.id ? { ...todo, text: saveTask } : data;
-            })
-        );
-        setIsEdit(null);
+    function handleSave(todoId) {
+        dispatch({
+            type: "todo/edited",
+            id: todoId,
+            text: draftText,
+        });
+
+        setEditId(null);
+        setDraftText("");
     }
 
-    function handleIsChecked(id, checked) {
-        setTodoData((prevData) => {
-            return prevData.map((data) => {
-                return data.id === id ? { ...data, done: checked } : data;
-            });
+    function handleToggle(todoId, checked) {
+        dispatch({
+            type: "todo/toggled",
+            id: todoId,
+            done: checked,
         });
     }
 
-    function handleDeleteTask(id) {
-        setTodoData(todoData.filter((d) => d.id != id));
+    function handleDelete(todoId) {
+        dispatch({
+            type: "todo/deleted",
+            id: todoId,
+        });
     }
 
-    const filterTodoData = todoData.filter((data) => {
-        if (filter === "active") return !data.done;
-        if (filter === "done") return data.done;
-        return data;
+    const filteredTodos = todos.filter(todo => {
+        if (filter === "active") return !todo.done;
+        if (filter === "done") return todo.done;
+        return true;
     });
 
     return (
         <>
-            <TodoReducer />
-            <h1>Todo List (Strict)</h1>
-            {!isEdit && (
+            <h1>Todo List (useReducer)</h1>
+
+            {editId === null && (
                 <>
                     <input
                         value={addTask}
-                        onChange={(e) => setAddTask(e.target.value)}
-                        type="text"
-                        placeholder="Add items to list"
+                        onChange={e => setAddTask(e.target.value)}
+                        placeholder="Add a task"
                     />
                     <button onClick={handleAddTask}>Add</button>
-                    <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+
+                    <select value={filter} onChange={e => setFilter(e.target.value)}>
                         <option value="all">All</option>
                         <option value="active">Active</option>
                         <option value="done">Done</option>
@@ -75,82 +81,45 @@ export default function Todo() {
             )}
 
             <ol>
-                {filterTodoData.map((todo) => {
-                    return (
-                        <li
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                            }}
-                            key={todo.id}
-                        >
-                            {isEdit === todo.id ? (
-                                <>
-                                    <input
-                                        type="text"
-                                        value={saveTask}
-                                        onChange={(e) => setSaveTask(e.target.value)}
-                                    />
-                                    <button onClick={() => handleSaveTask(todo)}>Save</button>
-                                </>
-                            ) : (
-                                <>
-                                    <input
-                                        type="checkbox"
-                                        checked={todo.done}
-                                        onChange={(e) => handleIsChecked(todo.id, e.target.checked)}
-                                    />
-                                    {todo.done ? (
-                                        <p style={{ color: "green" }}>
-                                            <s>{todo.text}</s>
-                                        </p>
-                                    ) : (
-                                        <>
-                                            <p style={{ color: "yellow" }}>{todo.text}</p>
-                                            <button onClick={() => handleEditTask(todo)}>Edit</button>
-                                        </>
-                                    )}
-                                </>
-                            )}
-                            <button
-                                onClick={() => handleDeleteTask(todo.id)}
-                                style={{ color: "#000000", background: "#ff0000" }}
-                            >
-                                Delete
-                            </button>
-                        </li>
-                    );
-                })}
+                {filteredTodos.map(todo => (
+                    <li
+                        key={todo.id}
+                        style={{
+                            display: "flex",
+                            gap: "10px",
+                            alignItems: "center",
+                        }}
+                    >
+                        {editId === todo.id ? (
+                            <>
+                                <input
+                                    value={draftText}
+                                    onChange={e => setDraftText(e.target.value)}
+                                />
+                                <button onClick={() => handleSave(todo.id)}>Save</button>
+                            </>
+                        ) : (
+                            <>
+                                <input
+                                    type="checkbox"
+                                    checked={todo.done}
+                                    onChange={e => handleToggle(todo.id, e.target.checked)}
+                                />
+
+                                <p style={{ textDecoration: todo.done ? "line-through" : "" }}>
+                                    {todo.text}
+                                </p>
+
+                                {!todo.done && (
+                                    <button onClick={() => handleEdit(todo)}>Edit</button>
+                                )}
+                            </>
+                        )}
+
+                        <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                    </li>
+                ))}
             </ol>
         </>
     );
 }
-
-const preTodoData = [
-    {
-        id: 1,
-        text: "Buy Avocado",
-        done: false,
-    },
-    {
-        id: 2,
-        text: "Get Milk",
-        done: false,
-    },
-    {
-        id: 3,
-        text: "Run Marathon",
-        done: false,
-    },
-    {
-        id: 4,
-        text: "Get Healthy",
-        done: false,
-    },
-    {
-        id: 5,
-        text: "Start Business",
-        done: false,
-    },
-];

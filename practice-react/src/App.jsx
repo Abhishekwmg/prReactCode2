@@ -11,8 +11,10 @@
 // import Undo from "./undo/Undo"
 // import Tabs from "./tabs/Tabs"
 // import MultiForm from "./multi-step-form/MultiForm"
-import Todo from "./todo/Todo"
+// import Todo from "./todo/Todo"
+// import Todo from "./todo-reducer/Todo"
+import CountReducer from "./reducers/counter-reducer/Counter"
 
 export default function App() {
-  return <Todo />
+  return <CountReducer />
 }
