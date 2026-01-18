@@ -16,8 +16,10 @@
 // import Counter from "./reducers/counter-reducer/Counter"
 // import StepCounter from "./reducers/step-counter/StepCounter"
 // import ShoppingCart from "./reducers/shopping-cart/ShoppingCart"
-import MainContext from "./context/MainContext"
+// import MainContext from "./context/MainContext"
+// import MainTheme from "./theme-context/MainTheme"
+import RefCount from "./refs/ref-count/RefCount"
 
 export default function App() {
-  return <MainContext />
+  return <RefCount />
 }
