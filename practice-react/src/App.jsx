@@ -18,8 +18,9 @@
 // import ShoppingCart from "./reducers/shopping-cart/ShoppingCart"
 // import MainContext from "./context/MainContext"
 // import MainTheme from "./theme-context/MainTheme"
-import RefCount from "./refs/ref-count/RefCount"
+// import RefCount from "./refs/ref-count/RefCount"
+import RefStopwatch from "./refs/ref-stopwatch/RefStopwatch"
 
 export default function App() {
-  return <RefCount />
+  return <RefStopwatch />
 }
