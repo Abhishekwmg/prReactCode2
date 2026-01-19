@@ -19,8 +19,9 @@
 // import MainContext from "./context/MainContext"
 // import MainTheme from "./theme-context/MainTheme"
 // import RefCount from "./refs/ref-count/RefCount"
-import RefStopwatch from "./refs/ref-stopwatch/RefStopwatch"
+// import RefStopwatch from "./refs/ref-stopwatch/RefStopwatch"
+import Refdom from "./refs/ref-dom/Refdom"
 
 export default function App() {
-  return <RefStopwatch />
+  return <Refdom />
 }
